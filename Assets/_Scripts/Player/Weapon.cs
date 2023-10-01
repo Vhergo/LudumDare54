@@ -24,8 +24,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     private Transform gunBarrel;
 
-    public static Action<int> OnPlayerShoot;
-    public static Action<float> OnPlayerReloadStart;
+    public static Action<int> OnAmmoChange;
+    public static Action<float> OnReloadStart;
 
     private void Awake() {
         if (Instance == null) {
@@ -40,6 +40,8 @@ public class Weapon : MonoBehaviour
 
         currentAmmo = maxAmmo;
         fireRateTimer = fireRate;
+
+        OnAmmoChange?.Invoke(currentAmmo);
     }
 
     private void Update() {
@@ -64,8 +66,9 @@ public class Weapon : MonoBehaviour
         currentAmmo--;
         fireRateTimer = 0;
 
-        OnPlayerShoot?.Invoke(currentAmmo);
+        OnAmmoChange?.Invoke(currentAmmo);
         FireBullet();
+
         // SoundManager.Instance.PlaySound(shootSound);
     }
 
@@ -84,7 +87,7 @@ public class Weapon : MonoBehaviour
         if (!CanReload()) return;
 
         Debug.Log("Start Reload");
-        OnPlayerReloadStart?.Invoke(reloadTime);
+        OnReloadStart?.Invoke(reloadTime);
         reloadTimer = reloadTime;
         isReloading = true;
 

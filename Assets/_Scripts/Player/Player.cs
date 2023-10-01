@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
-    [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float currentHealth;
+    public float maxHealth = 100f;
+    public float currentHealth;
 
     public bool isDead;
 
@@ -25,10 +25,12 @@ public class Player : MonoBehaviour
 
     private void Start() {
         currentHealth = maxHealth;
+        OnPlayerTakeDamage?.Invoke(currentHealth);
     }
 
     public void TakeDamage(float damageTaken, EnemyType enemyType) {
         currentHealth -= damageTaken;
+        OnPlayerTakeDamage?.Invoke(currentHealth);
         if (currentHealth <= 0) {
             Death(enemyType);
         }

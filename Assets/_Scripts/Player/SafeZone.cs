@@ -9,6 +9,12 @@ public class SafeZone : MonoBehaviour
     [SerializeField] private Vector3 initialScale;
     [Range(0, 1)] public float shrinkSpeed = 0.2f;
 
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float moveRange = 50f;
+    [SerializeField] private float moveCooldown = 5f;
+    private Vector2 targetPosition;
+    private bool isMoving;
+
     [SerializeField] private float damage = 10f;
     [SerializeField] private float damageCooldown = 5f;
     private float damageTimer;
@@ -36,6 +42,7 @@ public class SafeZone : MonoBehaviour
     }
 
     private void Start() {
+        // targetPosition = GetRandomPointInRange();
         transform.localScale = initialScale;
         damageTimer = 0;
     }
@@ -43,15 +50,37 @@ public class SafeZone : MonoBehaviour
     private void Update() {
         ShrinkSafeZone();
         DamagePlayer();
+        HandleSafeZoneMovement();
+    }
+
+    private void HandleSafeZoneMovement() {
+        if (!isMoving && Vector2.Distance(transform.position, targetPosition) <= 0.1f) {
+            targetPosition = GetRandomPointInRange();
+            StartCoroutine(MoveSafeZone());
+        }
+    }
+
+    private IEnumerator MoveSafeZone() {
+        isMoving = true;
+        while ((Vector2)transform.position != targetPosition) {
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            yield return null; // wait for next frame
+        }
+        yield return new WaitForSeconds(moveCooldown);
+        isMoving = false;
+    }
+
+    private Vector2 GetRandomPointInRange() {
+        return Vector2.zero + Random.insideUnitCircle * moveRange;
     }
 
     private void ShrinkSafeZone() {
         transform.localScale -= Vector3.one * shrinkSpeed * Time.deltaTime;
     }
 
-    [ContextMenu("Grow Safe Zone")]
-    public void GrowSafeZone(EnemyType enemyType) {
-        transform.localScale += Vector3.one * ChooseEnemySafeZoneBonus(enemyType);
+    public void GrowSafeZone(EnemyType enemyType, bool enemyDiedInSafeZone) {
+        if (enemyDiedInSafeZone)
+            transform.localScale += Vector3.one * ChooseEnemySafeZoneBonus(enemyType);
     }
 
     private float ChooseEnemySafeZoneBonus(EnemyType enemyType) {

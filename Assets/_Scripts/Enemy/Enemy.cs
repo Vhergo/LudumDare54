@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,10 +11,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float safeZoneIncreaseValue;
 
+    protected bool isInSafeZone;
+
     protected Rigidbody2D rb;
     protected EnemyType enemyType;
 
-    public static event Action<EnemyType> OnEnemyDeath;
+    public static event Action<EnemyType, bool> OnEnemyDeath;
 
     protected virtual void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -31,7 +32,19 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Death() {
         //Death Animation
-        OnEnemyDeath?.Invoke(enemyType);
+        OnEnemyDeath?.Invoke(enemyType, isInSafeZone);
+    }
+
+    private void OnTriggerEnter2D(Collider2D col) {
+        if (col.CompareTag("SafeZone")) {
+            isInSafeZone = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D col) {
+        if (col.CompareTag("SafeZone")) {
+            isInSafeZone = false;
+        }
     }
 }
 
