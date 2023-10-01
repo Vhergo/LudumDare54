@@ -7,6 +7,10 @@ TagManager:
   - Settings
   - Sliders
   - Audio Toggles
+  - GunBarrel
+  - Bullet
+  - Enemy
+  - SafeZone
   layers:
   - Default
   - TransparentFX
@@ -43,4 +47,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: SafeZone
+    uniqueID: 2780921897
+    locked: 0
+  - name: Void
+    uniqueID: 4091824289
     locked: 0
