@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public static Action<EnemyType> OnPlayerDeath;
     public static Action<float> OnPlayerTakeDamage;
 
+    private Rigidbody2D rb;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -24,8 +26,8 @@ public class Player : MonoBehaviour
     }
 
     private void Start() {
+        rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        OnPlayerTakeDamage?.Invoke(currentHealth);
     }
 
     public void TakeDamage(float damageTaken, EnemyType enemyType) {
@@ -40,6 +42,9 @@ public class Player : MonoBehaviour
         //Death Animation
         isDead = true;
         OnPlayerDeath?.Invoke(enemyType);
-        Destroy(gameObject, 5f);
+    }
+
+    public void Knockback(Vector2 knockbackDirection, float knockbackForce) {
+        rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
     }
 }

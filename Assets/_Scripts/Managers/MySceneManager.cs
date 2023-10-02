@@ -9,7 +9,7 @@ public class MySceneManager : MonoBehaviour
 
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private float loadingScreenDuration = 2f;
-    private bool isPaused;
+    public bool isPaused;
 
     private void Awake() {
         if(Instance == null) {
@@ -76,7 +76,7 @@ public class MySceneManager : MonoBehaviour
     }
 
     private void HandleSceneInput() {
-        if (Input.GetKeyDown(KeyCode.R)) {
+        if (Input.GetKeyDown(KeyCode.O)) {
             RestartScene();
         }
 

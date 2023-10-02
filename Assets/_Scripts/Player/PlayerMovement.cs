@@ -30,7 +30,10 @@ public class PlayerMovement : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
-    }   
+    }
+
+    private void OnEnable() => Player.OnPlayerDeath += PlayerDeath;
+    private void OnDisable() => Player.OnPlayerDeath -= PlayerDeath;
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -77,6 +80,10 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         isDashing = false;
 
+    }
+
+    private void PlayerDeath(EnemyType enemyType) {
+        rb.velocity = Vector2.zero;
     }
 
     private void RotateToMouse() {

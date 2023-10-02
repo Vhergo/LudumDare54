@@ -1,22 +1,25 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GruntEnemy : Enemy
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float deceleration;
+
     [SerializeField] private float rotationSpeed;
 
     private Transform targetPosition;
 
     protected override void Start() {
         base.Start();
-        targetPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        targetPosition = Player.Instance.transform;
     }
 
-    private void Update() {
-        FollowTarget();
-        LookRotation();
-    }
+    private void Update() => LookRotation();
+
+    private void FixedUpdate() => FollowTarget();
 
     protected override void Death() {
         base.Death();
@@ -25,8 +28,13 @@ public class GruntEnemy : Enemy
     }
 
     private void FollowTarget() {
-        Vector2 direciton = targetPosition.position - transform.position;
-        rb.velocity = direciton.normalized * moveSpeed;
+        Vector2 direction = (targetPosition.position - transform.position).normalized;
+        Vector2 targetVelocity = direction * moveSpeed;
+        rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+
+        if (!canAttack) {
+            rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
+        }
     }
 
     void LookRotation() {

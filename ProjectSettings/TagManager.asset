@@ -54,3 +54,6 @@ TagManager:
   - name: Void
     uniqueID: 4091824289
     locked: 0
+  - name: EnemyIndicator
+    uniqueID: 1312332277
+    locked: 0

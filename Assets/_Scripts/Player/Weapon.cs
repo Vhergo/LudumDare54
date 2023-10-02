@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -7,8 +8,11 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private float damage;
     [SerializeField] private float fireRate;
+    [SerializeField] private float bulletSpread;
+    [SerializeField] private int bulletsPerShot;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletLifeTime;
+    [SerializeField] private float selfKnockbackForce;
     private float fireRateTimer;
 
     [SerializeField] private int maxAmmo;
@@ -16,10 +20,16 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float reloadTime;
     private float reloadTimer;
     private bool isReloading;
+    private bool playedEmpty;
 
     [SerializeField] private AudioClip shootSound;
-    [SerializeField] private AudioClip reloadSound;
     [SerializeField] private AudioClip emptySound;
+    [SerializeField] private AudioClip startReloadSound;
+    [SerializeField] private AudioClip endReloadSound;
+    [SerializeField] private AudioClip loadSound;
+    [SerializeField] private float loadRate = 0.2f;
+    [SerializeField] private int loadCount = 5;
+    private float loadCounter;
 
     [SerializeField] private GameObject bulletPrefab;
     private Transform gunBarrel;
@@ -45,12 +55,17 @@ public class Weapon : MonoBehaviour
     }
 
     private void Update() {
+        if (MySceneManager.Instance != null) {
+            if (MySceneManager.Instance.isPaused) return;
+        }
         HandleInput();
     }
 
     private void HandleInput() {
         if (Input.GetKey(KeyCode.Mouse0) && CanShoot()) {
             Shoot();
+        } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            PlaySound(emptySound);
         } else {
             fireRateTimer += Time.deltaTime;
         }
@@ -58,29 +73,45 @@ public class Weapon : MonoBehaviour
         if (Input.GetKey(KeyCode.R)) {
             StartReload();
         }
-
-        Reload();
     }
 
     private void Shoot() {
+
+        for (int i = 0; i < bulletsPerShot; i++) {
+            FireBullet(CalculateSpread(i));
+        }
+
         currentAmmo--;
         fireRateTimer = 0;
 
         OnAmmoChange?.Invoke(currentAmmo);
-        FireBullet();
+        Player.Instance.Knockback(transform.position - gunBarrel.position, selfKnockbackForce);
 
-        // SoundManager.Instance.PlaySound(shootSound);
+        PlaySound(shootSound);
     }
 
-    private void FireBullet() {
-        GameObject bulletObject = Instantiate(bulletPrefab, gunBarrel.position, gunBarrel.rotation);
+    private void FireBullet(Quaternion spreadAngle) {
+        GameObject bulletObject = Instantiate(bulletPrefab, gunBarrel.position, spreadAngle);
 
         Rigidbody2D bulletRb = bulletObject.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = gunBarrel.right * bulletSpeed;
+        bulletRb.velocity = bulletObject.transform.right * bulletSpeed;
 
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.damage = damage;
         bullet.bulletLifeTime = bulletLifeTime;
+    }
+
+    private Quaternion CalculateSpread(int i) {
+        if (bulletsPerShot == 1) return gunBarrel.rotation;
+
+        float fireAngle = (-bulletSpread / 2) + (bulletSpread / (bulletsPerShot - 1)) * i;
+
+        Quaternion newRot = Quaternion.Euler(
+            gunBarrel.eulerAngles.x,
+            gunBarrel.eulerAngles.y,
+            gunBarrel.eulerAngles.z + fireAngle);
+
+        return newRot;
     }
 
     private void StartReload() {
@@ -91,21 +122,26 @@ public class Weapon : MonoBehaviour
         reloadTimer = reloadTime;
         isReloading = true;
 
-        // SoundManager.Instance.PlaySound(reloadSound);
+        PlaySound(startReloadSound);
+        StartCoroutine(Reload());
     }
 
-    private void Reload() {
-        if (isReloading) {
-            reloadTimer -= Time.deltaTime;
-            if (reloadTimer <= 0) {
-                FinishReload();
-            }
+    private IEnumerator Reload() {
+        loadCounter = loadCount;
+        yield return new WaitForSeconds(loadRate);
+        while (loadCounter > 0) {
+            PlaySound(loadSound);
+            loadCounter--;
+            yield return new WaitForSeconds(loadRate);
         }
+        FinishReload();
     }
 
     private void FinishReload() {
         isReloading = false;
         currentAmmo = maxAmmo;
+        OnAmmoChange?.Invoke(currentAmmo);
+        PlaySound(endReloadSound);
         Debug.Log("Finish Reload");
     }
 
@@ -115,5 +151,10 @@ public class Weapon : MonoBehaviour
 
     private bool CanReload() {
         return !Player.Instance.isDead && currentAmmo < maxAmmo && !isReloading;
+    }
+
+    private void PlaySound(AudioClip clip) {
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlaySound(clip);
     }
 }

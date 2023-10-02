@@ -138,6 +138,8 @@ public class SoundManager : MonoBehaviour
         }
 
         settings = GameObject.FindGameObjectWithTag("Settings");
+        if (settings == null)
+            LogError("Settings not properly referenced!");
 
         toggles = GameObject.FindGameObjectWithTag("Audio Toggles");
         if (toggles != null) {

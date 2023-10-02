@@ -8,6 +8,7 @@ public class SafeZone : MonoBehaviour
 
     [SerializeField] private Vector3 initialScale;
     [Range(0, 1)] public float shrinkSpeed = 0.2f;
+    private bool canShrink = true;
 
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float moveRange = 50f;
@@ -42,7 +43,6 @@ public class SafeZone : MonoBehaviour
     }
 
     private void Start() {
-        // targetPosition = GetRandomPointInRange();
         transform.localScale = initialScale;
         damageTimer = 0;
     }
@@ -75,7 +75,10 @@ public class SafeZone : MonoBehaviour
     }
 
     private void ShrinkSafeZone() {
+        if (!canShrink) return;
+
         transform.localScale -= Vector3.one * shrinkSpeed * Time.deltaTime;
+        if (transform.transform.localScale.x <= 0) canShrink = false;
     }
 
     public void GrowSafeZone(EnemyType enemyType, bool enemyDiedInSafeZone) {

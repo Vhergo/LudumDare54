@@ -2172,6 +2172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 1094647176}
   loadingScreenDuration: 1
+  isPaused: 0
 --- !u!4 &1835935575
 Transform:
   m_ObjectHideFlags: 0
@@ -2529,6 +2530,10 @@ PrefabInstance:
     - target: {fileID: 6619905537750667025, guid: 51b84b3e95f3de44c844dcdfb75ee490, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7165395094133011153, guid: 51b84b3e95f3de44c844dcdfb75ee490, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

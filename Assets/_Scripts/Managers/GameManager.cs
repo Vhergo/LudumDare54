@@ -14,5 +14,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable() {
+        Player.OnPlayerDeath += GameOver;
+    }
 
+    private void OnDisable() {
+        Player.OnPlayerDeath -= GameOver;
+    }
+
+    private void GameOver(EnemyType enemyType) {
+        
+    }
 }

@@ -19,8 +19,17 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private GameObject reloadIcon;
 
+    [Header("Game Over UI")]
+    [SerializeField] private Image gameOverOverlay;
+    [SerializeField] private float gameOverOverlayFadeInRate = 0.05f;
+    [SerializeField] private GameObject gameOverDisplay;
+    [SerializeField] private TMP_Text gameOverKillCountText;
+    [SerializeField] private TMP_Text gameOverHighScoreText;
+    [SerializeField] private TMP_Text killedByText;
+
 
     private void OnEnable() {
+        Player.OnPlayerDeath += HandlePlayerDeath;
         Player.OnPlayerTakeDamage += UpdatePlayerHealthUI;
         Enemy.OnEnemyDeath += UpdateKillCount;
         Weapon.OnAmmoChange += UpdateAmmoCount;
@@ -28,6 +37,8 @@ public class PlayerUI : MonoBehaviour
     }
 
     private void OnDisable() {
+        Player.OnPlayerDeath -= HandlePlayerDeath;
+        Player.OnPlayerTakeDamage -= UpdatePlayerHealthUI;
         Enemy.OnEnemyDeath -= UpdateKillCount;
         Weapon.OnAmmoChange -= UpdateAmmoCount;
         Weapon.OnReloadStart -= HandleReloadUIUpdate;
@@ -38,6 +49,26 @@ public class PlayerUI : MonoBehaviour
         gradualHealthBar.maxValue = Player.Instance.maxHealth;
         currentGradualFillValue = gradualHealthBar.maxValue;
         killCount = 0;
+
+        instantHealthBar.value = Player.Instance.maxHealth;
+        gradualHealthBar.value = Player.Instance.maxHealth;
+    }
+
+    private void HandlePlayerDeath(EnemyType enemyType) {
+        gameOverKillCountText.text = $"Kill Count: {killCount}";
+        // gameOverHighScoreText.text = $"High Score: {PlayerPrefs.GetInt("HighScore")}";
+        killedByText.text = $"Killed By: {enemyType.ToString()}";
+        StartCoroutine(GameOverUI(enemyType));
+    }
+
+    private IEnumerator GameOverUI(EnemyType enemyType) {
+        while (gameOverOverlay.color.a < 1) {
+            gameOverOverlay.color += new Color(0, 0, 0, gameOverOverlayFadeInRate);
+            yield return null;
+        }
+        gameOverDisplay.SetActive(true);
+        if (MySceneManager.Instance != null)
+            MySceneManager.Instance.PauseGameToggle();
     }
 
     private void UpdatePlayerHealthUI(float currentHealth) {
@@ -58,7 +89,7 @@ public class PlayerUI : MonoBehaviour
     }
 
     private void UpdateKillCount(EnemyType enemyType, bool enemyDiedInSafeZone) {
-        killCountText.text = $"Kill Count: {killCount}";
+        killCountText.text = $"Kill Count: {++killCount}";
         Debug.Log("Killed: " + enemyType.ToString());
     }
 
