@@ -10,7 +10,12 @@ public class GruntEnemy : Enemy
 
     [SerializeField] private float rotationSpeed;
 
+    [SerializeField] private AudioClip[] deathSounds;
+
     private Transform targetPosition;
+
+
+    protected void Awake() => enemyType = EnemyType.Grunt;
 
     protected override void Start() {
         base.Start();
@@ -24,6 +29,7 @@ public class GruntEnemy : Enemy
     protected override void Death() {
         base.Death();
         // Grunt Death Logic
+        PlayDeathSound();
         Destroy(gameObject);
     }
 
@@ -42,5 +48,10 @@ public class GruntEnemy : Enemy
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void PlayDeathSound() {
+        if (SoundManager.Instance == null) return;
+        SoundManager.Instance.PlaySound(deathSounds[Random.Range(0, deathSounds.Length)], variablePitch);
     }
 }

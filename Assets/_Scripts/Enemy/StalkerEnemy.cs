@@ -11,6 +11,14 @@ public class StalkerEnemy : Enemy
     [SerializeField] private float pouceForce = 10f;
     [SerializeField] private float pouceTime = 1f;
     [Range(0, 1)] [SerializeField] private float pouceEndMultiplier = 0.5f;
+    [SerializeField] private float knockbackForce;
+
+    [SerializeField] private float shakeIntensity;
+    [SerializeField] private float shakeFrequency;
+    [SerializeField] private float shakeDuration;
+
+    [SerializeField] private AudioClip[] attackSounds;
+    [SerializeField] private AudioClip[] deathSounds;
 
     private Transform targetPosition;
 
@@ -25,8 +33,11 @@ public class StalkerEnemy : Enemy
     private bool isStalking;
     private bool isPouncing;
 
+    protected void Awake() => enemyType = EnemyType.Stalker;
+
     protected override void Start() {
         base.Start();
+        enemyType = EnemyType.Stalker;
         targetPosition = Player.Instance.transform;
     }
 
@@ -38,6 +49,7 @@ public class StalkerEnemy : Enemy
     protected override void Death() {
         base.Death();
         // Stalker Death Logic
+        PlayDeathSound();
         Destroy(gameObject);
     }
 
@@ -83,6 +95,7 @@ public class StalkerEnemy : Enemy
 
     private IEnumerator PounceOnPlayer() {
         isPouncing = true;
+        PlayAttackSound();
         Vector2 direction = targetPosition.position - transform.position;
         rb.velocity = direction.normalized * pouceForce;
         yield return new WaitForSeconds(pouceTime);
@@ -102,5 +115,30 @@ public class StalkerEnemy : Enemy
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void PlayAttackSound() {
+        if (SoundManager.Instance == null) return;
+        SoundManager.Instance.PlaySound(attackSounds[Random.Range(0, attackSounds.Length)], variablePitch);
+    }
+
+    private void PlayDeathSound() {
+        if (SoundManager.Instance == null) return;
+        SoundManager.Instance.PlaySound(deathSounds[Random.Range(0, deathSounds.Length)], variablePitch);
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D col) {
+        base.OnCollisionEnter2D(col);
+        if (col.collider.CompareTag("Player")) {
+            if (isPouncing) {
+                Vector2 knockbackDirection = col.transform.position - transform.position;
+                col.collider.GetComponent<Player>().Knockback(knockbackDirection, knockbackForce);
+                
+                CameraShake.Instance.TriggerCameraShake(
+                shakeIntensity,
+                shakeFrequency,
+                shakeDuration);
+            }
+        }
     }
 }

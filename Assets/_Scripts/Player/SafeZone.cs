@@ -21,6 +21,7 @@ public class SafeZone : MonoBehaviour
     private float damageTimer;
     private bool playerInVoid;
 
+    [Header("Safe Zone Bonuses")]
     [SerializeField] private float gruntSafeZoneBonus;
     [SerializeField] private float stalkerSafeZoneBonus;
     [SerializeField] private float chargerSafeZoneBonus;
@@ -81,7 +82,7 @@ public class SafeZone : MonoBehaviour
         if (transform.transform.localScale.x <= 0) canShrink = false;
     }
 
-    public void GrowSafeZone(EnemyType enemyType, bool enemyDiedInSafeZone) {
+    public void GrowSafeZone(GameObject enemy, EnemyType enemyType, bool enemyDiedInSafeZone) {
         if (enemyDiedInSafeZone)
             transform.localScale += Vector3.one * ChooseEnemySafeZoneBonus(enemyType);
     }

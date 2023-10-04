@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Bullet : MonoBehaviour
 {
-    public float damage;
-    public float bulletLifeTime;
+    [HideInInspector] public float damage;
+    [HideInInspector] public float bulletLifeTime;
 
     private void Start() {
         Destroy(gameObject, bulletLifeTime);

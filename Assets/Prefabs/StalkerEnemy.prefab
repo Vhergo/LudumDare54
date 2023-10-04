@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8019867950872224622}
   - component: {fileID: 7965670517082754968}
   - component: {fileID: 9068866632096836649}
+  - component: {fileID: 9160250779853432115}
   - component: {fileID: 1464681223453441979}
   m_Layer: 0
   m_Name: StalkerEnemy
@@ -150,6 +151,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &9160250779853432115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3803522190602628023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06ae6547aacf7e4296bfa3f03af707d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1464681223453441979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,18 +175,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feff01874909e1046bbfe8485616cf9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 75
+  maxHealth: 100
   currentHealth: 0
   damage: 15
   attackSpeed: 4
-  selfKnockbackForce: 2
-  moveSpeed: 2
+  selfKnockbackForce: 4
+  hitSounds:
+  - {fileID: 8300000, guid: 167ea25ad20c5f94f88b81f84c7cefd4, type: 3}
+  - {fileID: 8300000, guid: 360aab8249e0f4d4c81bd2ed67e13f21, type: 3}
+  variablePitch: 1
+  moveSpeed: 4
   rotationSpeed: 10
   stalkBuffer: 1
   stalkWaitTime: 2
   pouceForce: 20
   pouceTime: 1
   pouceEndMultiplier: 0.2
+  knockbackForce: 8
+  shakeIntensity: 3
+  shakeFrequency: 2
+  shakeDuration: 0.3
+  attackSounds:
+  - {fileID: 8300000, guid: e46e21e2eb45a9b49ad6fa9f822f1850, type: 3}
+  - {fileID: 8300000, guid: 12e87433097d7504abbb5860e769ad43, type: 3}
+  - {fileID: 8300000, guid: d6eb1b80fb4c10440bb7e7920d0e0f8a, type: 3}
+  - {fileID: 8300000, guid: 8c07c3389a2f8834f873a1b122288c00, type: 3}
+  - {fileID: 8300000, guid: 39bab6b60db9c114d9fcbcaa6ab2a3ec, type: 3}
+  - {fileID: 8300000, guid: 83bb4f982bb398544a83fdecb67d5c24, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: c7976113430db294cbd328f6c246a687, type: 3}
+  - {fileID: 8300000, guid: b845f81bfb80c6c4b9077b8f996458da, type: 3}
+  - {fileID: 8300000, guid: 49a2275a882a9d34486088ab4c75f9c6, type: 3}
+  - {fileID: 8300000, guid: 46a3a75d87f7ee54aa114cc6a80864b1, type: 3}
+  - {fileID: 8300000, guid: df1192501c590c34fb01cc398c331db2, type: 3}
 --- !u!1 &6952069291999644280
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +282,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.6649456, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -13,11 +13,11 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] private TMP_Text killCountText;
     private int killCount;
-
     [SerializeField] private TMP_Text ammoCountText;
     private int ammoCount;
-
     [SerializeField] private GameObject reloadIcon;
+    [SerializeField] private TMP_Text waveCountText;
+    [SerializeField] private TMP_Text waveTimerText;
 
     [Header("Game Over UI")]
     [SerializeField] private Image gameOverOverlay;
@@ -33,7 +33,7 @@ public class PlayerUI : MonoBehaviour
         Player.OnPlayerTakeDamage += UpdatePlayerHealthUI;
         Enemy.OnEnemyDeath += UpdateKillCount;
         Weapon.OnAmmoChange += UpdateAmmoCount;
-        Weapon.OnReloadStart += HandleReloadUIUpdate;
+        SpawnManager.OnWaveChange += UpdateWaveCount;
     }
 
     private void OnDisable() {
@@ -41,7 +41,7 @@ public class PlayerUI : MonoBehaviour
         Player.OnPlayerTakeDamage -= UpdatePlayerHealthUI;
         Enemy.OnEnemyDeath -= UpdateKillCount;
         Weapon.OnAmmoChange -= UpdateAmmoCount;
-        Weapon.OnReloadStart -= HandleReloadUIUpdate;
+        SpawnManager.OnWaveChange -= UpdateWaveCount;
     }
 
     private void Start() {
@@ -52,6 +52,10 @@ public class PlayerUI : MonoBehaviour
 
         instantHealthBar.value = Player.Instance.maxHealth;
         gradualHealthBar.value = Player.Instance.maxHealth;
+    }
+
+    private void Update() {
+        waveTimerText.text = $"{(int)SpawnManager.Instance.waveTimer}";
     }
 
     private void HandlePlayerDeath(EnemyType enemyType) {
@@ -88,22 +92,16 @@ public class PlayerUI : MonoBehaviour
 
     }
 
-    private void UpdateKillCount(EnemyType enemyType, bool enemyDiedInSafeZone) {
+    private void UpdateWaveCount(int currentWave) {
+        waveCountText.text = $"{currentWave} ";
+    }
+
+    private void UpdateKillCount(GameObject enemy, EnemyType enemyType, bool enemyDiedInSafeZone) {
         killCountText.text = $"Kill Count: {++killCount}";
         Debug.Log("Killed: " + enemyType.ToString());
     }
 
     private void UpdateAmmoCount(int ammoCount) {
         ammoCountText.text = $"Ammo: {ammoCount}";
-    }
-
-    private IEnumerator UpdateReloadUI(float reloadTime) {
-        reloadIcon.SetActive(true);
-        yield return new WaitForSeconds(reloadTime);
-        reloadIcon.SetActive(false);
-    }
-
-    private void HandleReloadUIUpdate(float reloadTime) {
-        StartCoroutine(UpdateReloadUI(reloadTime));
     }
 }

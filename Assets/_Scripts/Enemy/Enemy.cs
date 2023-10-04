@@ -14,13 +14,17 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected float selfKnockbackForce;
 
+    [SerializeField] protected AudioClip[] hitSounds;
+    [SerializeField] protected bool variablePitch;
+
     protected bool isInSafeZone;
     protected bool canAttack = true;
+    protected bool isAlive = true;
 
     protected Rigidbody2D rb;
-    protected EnemyType enemyType;
+    public EnemyType enemyType;
 
-    public static event Action<EnemyType, bool> OnEnemyDeath;
+    public static event Action<GameObject, EnemyType, bool> OnEnemyDeath;
 
     protected virtual void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -28,10 +32,19 @@ public class Enemy : MonoBehaviour
     }
 
     public virtual void TakeDamage(float damageTaken) {
+        if (!isAlive) return;
+
+        PlayHitSound();
         currentHealth -= damageTaken;
         if (currentHealth <= 0) {
             Death();
         }
+    }
+
+    protected virtual void Death() {
+        //Death Animation
+        isAlive = false;
+        OnEnemyDeath?.Invoke(gameObject, enemyType, isInSafeZone);
     }
 
     private IEnumerator DealDamage() {
@@ -46,11 +59,6 @@ public class Enemy : MonoBehaviour
         rb.AddForce(knockbackDirection * selfKnockbackForce, ForceMode2D.Impulse);
     }
 
-    protected virtual void Death() {
-        //Death Animation
-        OnEnemyDeath?.Invoke(enemyType, isInSafeZone);
-    }
-
     protected virtual void OnCollisionEnter2D(Collision2D col) {
         if (col.collider.CompareTag("Player")) {
             if (canAttack) StartCoroutine(DealDamage());
@@ -59,16 +67,19 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col) {
         if (col.CompareTag("SafeZone")) {
-            Debug.Log("Enter Safe Zone");
             isInSafeZone = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D col) {
         if (col.CompareTag("SafeZone")) {
-            Debug.Log("Exit Safe Zone");
             isInSafeZone = false;
         }
+    }
+
+    private void PlayHitSound() {
+        if (SoundManager.Instance == null) return;
+        SoundManager.Instance.PlaySound(hitSounds[UnityEngine.Random.Range(0, hitSounds.Length)]);
     }
 }
 

@@ -16,6 +16,7 @@ public class SoundManager : MonoBehaviour
     [Header("Background Music")]
     [SerializeField] private AudioClip mainMenuMusic;
     [SerializeField] private AudioClip inGameMusic;
+    [SerializeField] private Vector2 pitchRange = new Vector2(0.8f, 1.2f);
 
     private Slider masterSlider;
     private Slider musicSlider;
@@ -61,7 +62,10 @@ public class SoundManager : MonoBehaviour
     }
 
     #region AUDIO HANDLING
-    public void PlaySound(AudioClip clip) {
+    public void PlaySound(AudioClip clip, bool variablePitch = false) {
+        if (clip == null) return;
+
+        effectsSource.pitch = variablePitch ? Random.Range(pitchRange.x, pitchRange.y) : 1f;
         effectsSource.PlayOneShot(clip);
     }
 

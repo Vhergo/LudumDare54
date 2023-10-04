@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8019867950872224622}
   - component: {fileID: 7965670517082754968}
   - component: {fileID: 9068866632096836649}
+  - component: {fileID: -1613393011333096433}
   - component: {fileID: 6453974624814529583}
   m_Layer: 0
   m_Name: ChargerEnemy
@@ -100,7 +101,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -150,6 +151,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &-1613393011333096433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3803522190602628023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06ae6547aacf7e4296bfa3f03af707d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6453974624814529583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,10 +180,26 @@ MonoBehaviour:
   damage: 20
   attackSpeed: 5
   selfKnockbackForce: 1
+  hitSounds:
+  - {fileID: 8300000, guid: 167ea25ad20c5f94f88b81f84c7cefd4, type: 3}
+  - {fileID: 8300000, guid: 360aab8249e0f4d4c81bd2ed67e13f21, type: 3}
+  variablePitch: 1
+  enemyType: 0
   chargeSpeed: 30
   chargerDespawnTime: 7
   trailDespawnTime: 0
-  knockbackForce: 25
+  knockbackForce: 20
+  shakeIntensity: 4
+  shakeFrequency: 2
+  shakeDuration: 0.4
+  spawnImpact: {fileID: 8300000, guid: d8bc4dc2584d89d478ae57092cf806fc, type: 3}
+  warCry: {fileID: 8300000, guid: 75251b793db67e6459f53165602d58a7, type: 3}
+  attackSounds:
+  - {fileID: 8300000, guid: cb6fa32d1df593345be6db17b0231294, type: 3}
+  - {fileID: 8300000, guid: d7d3201c22624b142a4a42c0a909c682, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 6a4466067f1327c4ca8fadc76fa6c1f6, type: 3}
+  - {fileID: 8300000, guid: 3a5f06161c899bf44ad822a98e2608b8, type: 3}
 --- !u!1 &6952069291999644280
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +274,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.0525127, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

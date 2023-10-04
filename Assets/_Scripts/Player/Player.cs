@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     }
 
     public void TakeDamage(float damageTaken, EnemyType enemyType) {
+        if (isDead) return;
+
         currentHealth -= damageTaken;
         OnPlayerTakeDamage?.Invoke(currentHealth);
         if (currentHealth <= 0) {

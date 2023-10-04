@@ -1259,8 +1259,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 566940276}
   effectsSource: {fileID: 829949439}
-  mainMenuMusic: {fileID: 8300000, guid: 68e4bc2623b6ddd46af10caa0b384433, type: 3}
-  inGameMusic: {fileID: 8300000, guid: bed7a10f43423f94e865e6f0e75a1cfa, type: 3}
+  mainMenuMusic: {fileID: 8300000, guid: 539968444872e614db2dd85b11a39772, type: 3}
+  inGameMusic: {fileID: 8300000, guid: 68e4bc2623b6ddd46af10caa0b384433, type: 3}
 --- !u!4 &1353709093
 Transform:
   m_ObjectHideFlags: 0
