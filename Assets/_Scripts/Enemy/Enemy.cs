@@ -17,6 +17,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected AudioClip[] hitSounds;
     [SerializeField] protected bool variablePitch;
 
+    [SerializeField] private ParticleSystem bloodParticle;
+    private Transform bloodContainer;
+
+    protected Transform targetPosition;
+
     protected bool isInSafeZone;
     protected bool canAttack = true;
     protected bool isAlive = true;
@@ -28,6 +33,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start() {
         rb = GetComponent<Rigidbody2D>();
+        targetPosition = Player.Instance.transform;
+        bloodContainer = GameObject.FindGameObjectWithTag("BloodContainer").transform;
         currentHealth = maxHealth;
     }
 
@@ -44,7 +51,14 @@ public class Enemy : MonoBehaviour
     protected virtual void Death() {
         //Death Animation
         isAlive = false;
+        HandleBloodOnDeath();
+
         OnEnemyDeath?.Invoke(gameObject, enemyType, isInSafeZone);
+    }
+
+    private void HandleBloodOnDeath() {
+        bloodParticle.Play();
+        bloodParticle.transform.SetParent(bloodContainer);
     }
 
     private IEnumerator DealDamage() {
@@ -65,7 +79,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col) {
+    protected virtual void OnTriggerEnter2D(Collider2D col) {
         if (col.CompareTag("SafeZone")) {
             isInSafeZone = true;
         }

@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3889247795424891208}
+  - {fileID: 3261782208596677769}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8019867950872224622
@@ -184,7 +185,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 167ea25ad20c5f94f88b81f84c7cefd4, type: 3}
   - {fileID: 8300000, guid: 360aab8249e0f4d4c81bd2ed67e13f21, type: 3}
   variablePitch: 1
+  bloodParticle: {fileID: 473364931094254094}
+  enemyType: 1
   moveSpeed: 4
+  acceleration: 2
+  deceleration: 2
   rotationSpeed: 10
   stalkBuffer: 1
   stalkWaitTime: 2
@@ -278,9 +283,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1312332277
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0.6649456, b: 1, a: 1}
   m_FlipX: 0
@@ -292,3 +297,70 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &5394048840325517259
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1749807422734049649}
+    m_Modifications:
+    - target: {fileID: 1939897457005826558, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_Name
+      value: BloodSplatter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+--- !u!198 &473364931094254094 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5497268086647414213, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+  m_PrefabInstance: {fileID: 5394048840325517259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3261782208596677769 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+  m_PrefabInstance: {fileID: 5394048840325517259}
+  m_PrefabAsset: {fileID: 0}

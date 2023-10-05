@@ -19,6 +19,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int currentAmmo;
     [SerializeField] private float reloadTimePerShell;
     private bool isReloading;
+    private bool reloadInterrupt;
 
     [SerializeField] private AudioClip shootSound;
     [SerializeField] private AudioClip emptySound;
@@ -57,16 +58,24 @@ public class Weapon : MonoBehaviour
     }
 
     private void HandleInput() {
-        if (Input.GetKey(KeyCode.Mouse0) && CanShoot()) {
-            Shoot();
-        } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            PlaySound(emptySound);
-        } else {
-            fireRateTimer += Time.deltaTime;
-        }
+        FireInput();
 
         if (Input.GetKey(KeyCode.R)) {
             StartReload();
+        }
+    }
+
+    private void FireInput() {
+        if (Input.GetKey(KeyCode.Mouse0) && CanShoot()) {
+            Shoot();
+        } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            if (isReloading) {
+                reloadInterrupt = true;
+            } else {
+                PlaySound(emptySound);
+            }
+        } else {
+            fireRateTimer += Time.deltaTime;
         }
     }
 
@@ -113,9 +122,7 @@ public class Weapon : MonoBehaviour
     private void StartReload() {
         if (!CanReload()) return;
 
-        Debug.Log("Start Reload");
         isReloading = true;
-
         PlaySound(startReloadSound);
         StartCoroutine(Reload());
     }
@@ -124,20 +131,23 @@ public class Weapon : MonoBehaviour
         loadCounter = maxAmmo - currentAmmo;
         yield return new WaitForSeconds(startReloadSound.length);
 
-        while (loadCounter > 0) {
+        while (loadCounter > 0 && !reloadInterrupt) {
             loadCounter--;
             PlaySound(loadSound);
             OnAmmoChange?.Invoke(++currentAmmo);
             yield return new WaitForSeconds(reloadTimePerShell);
+        }
+        if (reloadInterrupt && currentAmmo > 0) {
+            Shoot();
         }
         FinishReload();
     }
 
     private void FinishReload() {
         isReloading = false;
-        
+
+        if(reloadInterrupt) reloadInterrupt = false;
         PlaySound(endReloadSound);
-        Debug.Log("Finish Reload");
     }
 
     private bool CanShoot() {

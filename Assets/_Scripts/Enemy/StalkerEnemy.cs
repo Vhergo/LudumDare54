@@ -4,6 +4,9 @@ using UnityEngine;
 public class StalkerEnemy : Enemy
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float deceleration;
+
     [SerializeField] private float rotationSpeed;
 
     [SerializeField] private float stalkBuffer = 1f;
@@ -20,8 +23,6 @@ public class StalkerEnemy : Enemy
     [SerializeField] private AudioClip[] attackSounds;
     [SerializeField] private AudioClip[] deathSounds;
 
-    private Transform targetPosition;
-
     private enum StalkerState {
         Approach,
         Stalk,
@@ -32,8 +33,6 @@ public class StalkerEnemy : Enemy
     private StalkerState currentState = StalkerState.Approach;
     private bool isStalking;
     private bool isPouncing;
-
-    protected void Awake() => enemyType = EnemyType.Stalker;
 
     protected override void Start() {
         base.Start();
@@ -106,8 +105,13 @@ public class StalkerEnemy : Enemy
     }
 
     private void FollowTarget() {
-        Vector2 direciton = targetPosition.position - transform.position;
-        rb.velocity = direciton.normalized * moveSpeed;
+        Vector2 direction = (targetPosition.position - transform.position).normalized;
+        Vector2 targetVelocity = direction * moveSpeed;
+        rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+
+        if (!canAttack) {
+            rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
+        }
     }
 
     void LookRotation() {

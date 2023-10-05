@@ -487,6 +487,7 @@ RectTransform:
   m_Children:
   - {fileID: 819778981}
   - {fileID: 1937779643}
+  - {fileID: 520506623}
   - {fileID: 1912307723}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -945,6 +946,41 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &520506622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 520506623}
+  m_Layer: 5
+  m_Name: Indicators
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &520506623
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520506622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 245610605}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,7 +1018,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000a148e4f32980c1a5f599384e
+  m_ApplyToSortingLayers: 0000000063caca3b13e39e24
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1422,6 +1458,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &772033620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 772033621}
+  m_Layer: 0
+  m_Name: Particles
+  m_TagString: BloodContainer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &772033621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772033620}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &819778980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1586,10 +1653,10 @@ MonoBehaviour:
   moveCooldown: 5
   damage: 10
   damageCooldown: 3
-  gruntSafeZoneBonus: 0.75
-  stalkerSafeZoneBonus: 1.5
-  chargerSafeZoneBonus: 3
-  harbingerSafeZoneBonus: 6
+  gruntSafeZoneBonus: 1
+  stalkerSafeZoneBonus: 2
+  chargerSafeZoneBonus: 4
+  harbingerSafeZoneBonus: 10
 --- !u!58 &868635648
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1696,8 +1763,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -203143007
-  m_SortingLayer: 2
+  m_SortingLayerID: 1003145827
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -2952,37 +3019,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472336907}
   m_CullTransparentMesh: 1
---- !u!1 &1537412793
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1537412794}
-  m_Layer: 0
-  m_Name: Indicators
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1537412794
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537412793}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1556900040
 GameObject:
   m_ObjectHideFlags: 0
@@ -3264,14 +3300,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnList:
-  - enemyName: Charger
-    enemyPrefab: {fileID: 3803522190602628023, guid: 601c27ef6e3e2f14e84d4875dd30842a, type: 3}
-    weight: 100
   - enemyName: Grunt
     enemyPrefab: {fileID: 7635857279921894642, guid: 55f4a84677ea9b7448330e0594df580c, type: 3}
-    weight: 1
+    weight: 16
   - enemyName: Stalker
     enemyPrefab: {fileID: 3803522190602628023, guid: 2f753db7330b6d741b5aa7841694b056, type: 3}
+    weight: 3
+  - enemyName: Charger
+    enemyPrefab: {fileID: 3803522190602628023, guid: 601c27ef6e3e2f14e84d4875dd30842a, type: 3}
     weight: 1
   activeSpawnList: []
   spawnRadiusBuffer: 10
@@ -3279,10 +3315,10 @@ MonoBehaviour:
   waveData:
   - waveNumber: 1
     waveDuration: 20
-    spawnDelay: 5
+    spawnDelay: 1.5
   - waveNumber: 3
     waveDuration: 25
-    spawnDelay: 5
+    spawnDelay: 1.25
   - waveNumber: 6
     waveDuration: 30
     spawnDelay: 1
@@ -3305,8 +3341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1510b45e7824b31408434093a8d914fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorIconPrefab: {fileID: 1660572365334569793, guid: f08ae9207c7f0ef4f9f8b13180d76db6, type: 3}
-  indicatorParent: {fileID: 1537412794}
+  indicatorIconPrefab: {fileID: 3877162274306283722, guid: f08ae9207c7f0ef4f9f8b13180d76db6, type: 3}
+  indicatorParent: {fileID: 520506623}
 --- !u!1 &1766094176
 GameObject:
   m_ObjectHideFlags: 0
@@ -4283,4 +4319,4 @@ SceneRoots:
   - {fileID: 903502193}
   - {fileID: 442334705}
   - {fileID: 657389632}
-  - {fileID: 1537412794}
+  - {fileID: 772033621}

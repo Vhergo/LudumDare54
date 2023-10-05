@@ -67,8 +67,7 @@ public class SpawnManager : MonoBehaviour
             GameObject spawnedEnemy = Instantiate(GetRandomEnemy(), GetSpawnPosition(), Quaternion.identity, enemiesParent);
 
             if (spawnedEnemy.GetComponent<Enemy>().enemyType == EnemyType.Charger) {
-                OnChargerSpawn?.Invoke(gameObject);
-                Debug.Log("Charger Spawned");
+                OnChargerSpawn?.Invoke(spawnedEnemy);
             }
         }
     }

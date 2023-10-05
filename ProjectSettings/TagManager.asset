@@ -11,6 +11,7 @@ TagManager:
   - Bullet
   - Enemy
   - SafeZone
+  - BloodContainer
   layers:
   - Default
   - TransparentFX
@@ -45,15 +46,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Blood
+    uniqueID: 614392595
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: SafeZone
-    uniqueID: 2780921897
-    locked: 0
   - name: Void
-    uniqueID: 4091824289
-    locked: 0
-  - name: EnemyIndicator
-    uniqueID: 1312332277
+    uniqueID: 1003145827
     locked: 0

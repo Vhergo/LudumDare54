@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3889247795424891208}
+  - {fileID: 5675224998519686138}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8019867950872224622
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2949a384a0e06774290b91dc8f49d030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 600
   currentHealth: 0
   damage: 20
   attackSpeed: 5
@@ -184,11 +185,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 167ea25ad20c5f94f88b81f84c7cefd4, type: 3}
   - {fileID: 8300000, guid: 360aab8249e0f4d4c81bd2ed67e13f21, type: 3}
   variablePitch: 1
-  enemyType: 0
+  bloodParticle: {fileID: 7284541987967387005}
+  enemyType: 2
+  moveSpeed: 4
+  acceleration: 5
+  deceleration: 0.5
   chargeSpeed: 30
   chargerDespawnTime: 7
   trailDespawnTime: 0
   knockbackForce: 20
+  haltThreshold: 0.5
   shakeIntensity: 4
   shakeFrequency: 2
   shakeDuration: 0.4
@@ -270,9 +276,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1312332277
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.0525127, b: 0, a: 1}
   m_FlipX: 0
@@ -284,3 +290,70 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &2980780855737391288
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1749807422734049649}
+    m_Modifications:
+    - target: {fileID: 1939897457005826558, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_Name
+      value: BloodSplatter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+--- !u!4 &5675224998519686138 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7466879621878635330, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+  m_PrefabInstance: {fileID: 2980780855737391288}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7284541987967387005 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5497268086647414213, guid: a692b0a89ca00d34186e63a45a93dfc3, type: 3}
+  m_PrefabInstance: {fileID: 2980780855737391288}
+  m_PrefabAsset: {fileID: 0}

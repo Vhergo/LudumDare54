@@ -3,10 +3,15 @@ using UnityEngine;
 
 public class Charger : Enemy
 {
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float deceleration;
+
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float chargerDespawnTime;
     [SerializeField] private float trailDespawnTime;
     [SerializeField] protected float knockbackForce;
+    [Range(0, 1)] [SerializeField] private float haltThreshold;
 
     [SerializeField] private float shakeIntensity;
     [SerializeField] private float shakeFrequency;
@@ -18,11 +23,9 @@ public class Charger : Enemy
     [SerializeField] private AudioClip[] attackSounds;
     [SerializeField] private AudioClip[] deathSounds;
 
-    private Transform targetPosition;
     private Vector2 chargeDirection;
     private bool canCharge;
-
-    protected void Awake() => enemyType = EnemyType.Charger;
+    private bool isHalted;
 
     protected override void Start() {
         base.Start();
@@ -33,8 +36,25 @@ public class Charger : Enemy
     }
 
     private void Update() {
-        Charge();
-        HandleVoidTrail();
+        Attack();
+    }
+
+    public override void TakeDamage(float damageTaken) {
+        base.TakeDamage(damageTaken);
+        if (currentHealth <= maxHealth * haltThreshold) {
+            isHalted = true;
+            PlayAttackSound();
+        }
+    }
+
+    private void FollowTarget() {
+        Vector2 direction = (targetPosition.position - transform.position).normalized;
+        Vector2 targetVelocity = direction * moveSpeed;
+        rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+
+        if (!canAttack) {
+            rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
+        }
     }
 
     protected override void Death() {
@@ -44,12 +64,18 @@ public class Charger : Enemy
         Destroy(gameObject);
     }
 
-    private void Charge() {
-        if (canCharge) rb.velocity = chargeDirection * chargeSpeed;
+    private void Attack() {
+        if (!canCharge) return;
+        
+        if (isHalted) {
+            FollowTarget();
+        } else {
+            Charge();
+        }
     }
 
-    private void HandleVoidTrail() {
-
+    private void Charge() {
+        rb.velocity = chargeDirection * chargeSpeed;
     }
 
     void SetRotation() {

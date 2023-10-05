@@ -12,14 +12,9 @@ public class GruntEnemy : Enemy
 
     [SerializeField] private AudioClip[] deathSounds;
 
-    private Transform targetPosition;
-
-
-    protected void Awake() => enemyType = EnemyType.Grunt;
-
     protected override void Start() {
         base.Start();
-        targetPosition = Player.Instance.transform;
+        // Grunt Start Logic
     }
 
     private void Update() => LookRotation();

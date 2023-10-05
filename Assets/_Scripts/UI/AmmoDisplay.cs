@@ -36,7 +36,6 @@ public class AmmoDisplay : MonoBehaviour
     }
 
     private void UpdateAmmoCount(int ammoCount) {
-        Debug.Log("Ammo Count: " + ammoCount);
         for (int i = 0; i < bulletList.Count; i++) {
             if (i < ammoCount) {
                 bulletList[i].enabled = true;
