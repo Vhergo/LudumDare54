@@ -29,7 +29,10 @@ public class Weapon : MonoBehaviour
     private float loadCounter;
 
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private ParticleSystem muzzleFlash;
+    private SpriteRenderer weaponSprite;
     private Transform gunBarrel;
+    private Vector2 mousePos;
 
     public static Action<int> OnAmmoChange;
 
@@ -42,6 +45,7 @@ public class Weapon : MonoBehaviour
     }
 
     private void Start() {
+        weaponSprite = GetComponent<SpriteRenderer>();
         gunBarrel = GameObject.FindGameObjectWithTag("GunBarrel").transform;
 
         currentAmmo = maxAmmo;
@@ -91,6 +95,7 @@ public class Weapon : MonoBehaviour
         OnAmmoChange?.Invoke(currentAmmo);
         Player.Instance.Knockback(transform.position - gunBarrel.position, selfKnockbackForce);
 
+        muzzleFlash.Play();
         PlaySound(shootSound);
         TriggerScreenShake();
     }

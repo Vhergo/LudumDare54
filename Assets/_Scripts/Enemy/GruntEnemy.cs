@@ -8,7 +8,7 @@ public class GruntEnemy : Enemy
     [SerializeField] private float acceleration;
     [SerializeField] private float deceleration;
 
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float rotationSpeed = 10f;
 
     [SerializeField] private AudioClip[] deathSounds;
 

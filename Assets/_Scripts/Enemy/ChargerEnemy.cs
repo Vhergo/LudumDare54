@@ -7,6 +7,8 @@ public class Charger : Enemy
     [SerializeField] private float acceleration;
     [SerializeField] private float deceleration;
 
+    [SerializeField] private float rotationSpeed = 10f;
+
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float chargerDespawnTime;
     [SerializeField] private float trailDespawnTime;
@@ -31,12 +33,23 @@ public class Charger : Enemy
         base.Start();
         Destroy(gameObject, chargerDespawnTime);
 
-        if (SoundManager.Instance == null) return;
+        SetInitialRotation();
         StartCoroutine(HandleSpawn());
     }
 
     private void Update() {
         Attack();
+    }
+
+    private void Attack() {
+        if (!canCharge) return;
+
+        if (isHalted) {
+            FollowTarget();
+            HandleRotation();
+        } else {
+            Charge();
+        }
     }
 
     public override void TakeDamage(float damageTaken) {
@@ -45,6 +58,10 @@ public class Charger : Enemy
             isHalted = true;
             PlayAttackSound();
         }
+    }
+
+    private void Charge() {
+        rb.velocity = chargeDirection * chargeSpeed;
     }
 
     private void FollowTarget() {
@@ -63,25 +80,17 @@ public class Charger : Enemy
         PlayDeathSound();
         Destroy(gameObject);
     }
-
-    private void Attack() {
-        if (!canCharge) return;
-        
-        if (isHalted) {
-            FollowTarget();
-        } else {
-            Charge();
-        }
-    }
-
-    private void Charge() {
-        rb.velocity = chargeDirection * chargeSpeed;
-    }
-
-    void SetRotation() {
+    void SetInitialRotation() {
         Vector2 lookDirection = targetPosition.position - transform.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); ;
+    }
+
+    void HandleRotation() {
+        Vector2 lookDirection = targetPosition.position - transform.position;
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
 
     private void PlayAttackSound() {
@@ -95,14 +104,13 @@ public class Charger : Enemy
     }
 
     private IEnumerator HandleSpawn() {
-        SoundManager.Instance.PlaySound(spawnImpact);
+        if (SoundManager.Instance != null) SoundManager.Instance.PlaySound(spawnImpact);
         yield return new WaitForSeconds(spawnImpact.length / 2);
-        SoundManager.Instance.PlaySound(warCry);
+        if (SoundManager.Instance != null) SoundManager.Instance.PlaySound(warCry);
         yield return new WaitForSeconds(warCry.length / 2);
 
         targetPosition = Player.Instance.transform;
         chargeDirection = (targetPosition.position - transform.position).normalized;
-        SetRotation();
 
         canCharge = true;
     }

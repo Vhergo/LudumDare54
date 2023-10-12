@@ -7,7 +7,7 @@ public class StalkerEnemy : Enemy
     [SerializeField] private float acceleration;
     [SerializeField] private float deceleration;
 
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float rotationSpeed = 10f;
 
     [SerializeField] private float stalkBuffer = 1f;
     [SerializeField] private float stalkWaitTime = 1f;

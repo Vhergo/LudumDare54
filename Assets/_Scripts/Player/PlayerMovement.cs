@@ -15,8 +15,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveDirection;
     private Vector2 mousePos;
 
-    [SerializeField] private float rotationSpeed = 10f;
-
     [SerializeField] private float dashForce = 12f;
     [SerializeField] private float dashDuration = 1f;
     [SerializeField] private float dashCooldown = 1f;
@@ -41,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() {
         ProcessInput();
-        RotateToMouse();
     }
 
     private void FixedUpdate() {
@@ -85,14 +82,4 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerDeath(EnemyType enemyType) {
         rb.velocity = Vector2.zero;
     }
-
-    private void RotateToMouse() {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-
-    }
-
-
 }
