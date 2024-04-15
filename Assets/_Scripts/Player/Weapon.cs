@@ -64,7 +64,7 @@ public class Weapon : MonoBehaviour
     private void HandleInput() {
         FireInput();
 
-        if (Input.GetKey(KeyCode.R)) {
+        if (Input.GetKey(KeyCode.R) || Input.GetKey(KeyCode.Mouse1)) {
             StartReload();
         }
     }

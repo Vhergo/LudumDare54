@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerUI : MonoBehaviour
+public class PlayerUI : MonoBehaviour, ISaveable
 {
     [SerializeField] private Slider instantHealthBar;
     [SerializeField] private Slider gradualHealthBar;
@@ -48,7 +48,6 @@ public class PlayerUI : MonoBehaviour
         instantHealthBar.maxValue = Player.Instance.maxHealth;
         gradualHealthBar.maxValue = Player.Instance.maxHealth;
         currentGradualFillValue = gradualHealthBar.maxValue;
-        killCount = 0;
 
         instantHealthBar.value = Player.Instance.maxHealth;
         gradualHealthBar.value = Player.Instance.maxHealth;
@@ -103,5 +102,14 @@ public class PlayerUI : MonoBehaviour
 
     private void UpdateAmmoCount(int ammoCount) {
         ammoCountText.text = $"Ammo: {ammoCount}";
+    }
+
+    public void PopulateSaveData(SaveData saveData) {
+        saveData.killCount = killCount;
+    }
+
+    public void LoadFromSaveData(SaveData saveData) {
+        killCount = saveData.killCount;
+        killCountText.text = $"Kill Count: {killCount}";
     }
 }

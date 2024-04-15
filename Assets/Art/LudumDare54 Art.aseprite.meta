@@ -121,16 +121,76 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: LudumDare54 Art
     originalName: 
-    pivot: {x: 0.516129, y: 0}
+    pivot: {x: -0.16363636, y: -0.053571433}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 67
+      y: 4
+      width: 55
+      height: 56
+    spriteID: 7fd23cece8a4a8b42857edabc640f6a1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 67, y: 4}
+  - name: LudumDare54 Art_Frame_1
+    originalName: 
+    pivot: {x: -0.16363636, y: -0.17999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 67
+      y: 68
+      width: 55
+      height: 50
+    spriteID: d25098e466f898e408ffc1ca1a242e4e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 67, y: 68}
+  - name: LudumDare54 Art_Frame_2
+    originalName: 
+    pivot: {x: -0.16363636, y: -0.14545454}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 69
+      width: 55
+      height: 55
+    spriteID: c3db5ce39ddf486468c11506c0b82da7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 69}
+  - name: LudumDare54 Art_Frame_3
+    originalName: 
+    pivot: {x: -0.16363636, y: -0.12280702}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 124
-      height: 64
-    spriteID: 7fd23cece8a4a8b42857edabc640f6a1
+      width: 55
+      height: 57
+    spriteID: b4f6abfe4cd23544cb765083774b41d6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -148,14 +208,38 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: LudumDare54 Art
+    - name: LudumDare54 Art_Frame_0
       frameIndex: 0
       cellRect:
-        x: 0
-        y: 0
-        width: 124
-        height: 64
+        x: 73
+        y: 3
+        width: 55
+        height: 56
       spriteId: 7fd23cece8a4a8b42857edabc640f6a1
+    - name: LudumDare54 Art_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 73
+        y: 9
+        width: 55
+        height: 50
+      spriteId: d25098e466f898e408ffc1ca1a242e4e
+    - name: LudumDare54 Art_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 73
+        y: 8
+        width: 55
+        height: 55
+      spriteId: c3db5ce39ddf486468c11506c0b82da7
+    - name: LudumDare54 Art_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 73
+        y: 7
+        width: 55
+        height: 57
+      spriteId: b4f6abfe4cd23544cb765083774b41d6
     linkedCells: []
     parentIndex: -1
   platformSettings: []
